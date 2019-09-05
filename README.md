@@ -1,2 +1,2 @@
 # date-panel
-Web development basics...
+jQuery practice with jQuery UI using date picker.
