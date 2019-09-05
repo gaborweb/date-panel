@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+#panel, #flip{
+    padding: 5px;
+    border: 1px solid rgb(120, 145, 53);
+}
+#panel{
+    padding: 50px;
+    width: 160px;
+    display: none;
+}
+#flip{
+    width: 250px;
+}
+table{
+    width: 250px;
+}
+#td2{
+    text-align: right;
+}
+#imageClick{
+    cursor: pointer;
+}
+
+</style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+        var imageSrc=$("#imageClick").attr("src");
+        
+        $("#dFrom").datepicker();
+        $("#dTo").datepicker();
+
+        var now=new Date();
+        var oneDay= 1000*60*60*24;
+        var startDateOfYear=new Date(now.getFullYear(),0,0);
+
+        $("#imageClick").click(function(){
+            if(imageSrc==="right.png"){
+                imageSrc="down.png";
+            } else {
+                imageSrc="right.png";
+            }
+            setImage();
+            $("#panel").slideToggle("slow");
+        });
+
+        $("#hide").click(function(){
+            imageSrc="right.png";
+            $("#panel").slideUp("slow", function(){
+
+                setImage();
+
+                var dateFrom=new Date($("#dFrom").val());
+                var dateTo=new Date($("#dTo").val());
+                var resultOfDiffDays=Math.floor(Math.abs((dateTo-dateFrom)/oneDay));
+
+                $("#resultOfDiffDates").text(resultOfDiffDays);
+            });
+        });
+
+        function setImage(){
+            $("#imageClick").attr("src", imageSrc);
+        }
+    });
+
+</script>
+</head>
+<body>
+
+    <p>Difference result: <span id="resultOfDiffDates"></span></p>
+
+    <div id="flip">
+        <table>
+            <tr>
+                <td id="td1">Panel Header</td>
+                <td id="td2"><img src="right.png" id="imageClick" alt="right" height="42px" width="42px"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="panel">
+        <p>Date from: <input type="text" id="dFrom"></p>
+        <p>Date to: <input type="text" id="dTo"></p>
+        <button id="hide">Submit</button>
+    </div>
+    
+</body>
+</html>
